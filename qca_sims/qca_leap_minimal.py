@@ -7,7 +7,8 @@ https://docs.ocean.dwavesys.com/en/stable/getting_started.html
 '''
 
 def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False, 
-        num_reads=10, show_inspector=False, plot_emb_path=None):
+        num_reads=10, show_inspector=False, plot_emb_path=None, 
+        h_array=[-1, 0], J_array=[[0, 1],[1, 0]]):
     '''
     Minimal 1 Driver 2 Cell QCA Problem (introduced in the Leap slide deck).
 
@@ -47,10 +48,8 @@ def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False,
     import itertools
 
     # define self bias (h) and coupling strengths (J)
-    h = - E_k * np.array([-1, 0])
-    J = - E_k * np.array(
-            [[0, 1],
-             [1, 0]])
+    h = - E_k * np.array(h_array)
+    J = - E_k * np.array(J_array)
     N = len(h)
 
     # create edgelist (note that {} initializes Python dicts)
