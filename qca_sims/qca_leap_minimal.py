@@ -98,6 +98,7 @@ def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False,
         print('Choosing D-Wave QPU as sampler...')
         sampler = EmbeddingComposite(dwave_sampler)
     response = sampler.sample(bqm, num_reads=50)
+    print(response)
     print('Problem completed from selected sampler.')
 
     # plot the embedding if specified

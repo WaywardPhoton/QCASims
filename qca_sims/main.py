@@ -17,13 +17,17 @@ for i in range(len(circuit.nodes)):
         # You can use pdb to inspect what kind of information is available 
         # within each node.
         print(f'x: {node["x"]}\ty: {node["y"]}\tpol: {node["pol"]}\trotated: {node["rot"]}')
-        if node["pol"] != 0:
+        if node["pol"] == 1:
                 inputs.append(np.array((node["x"], node["y"], node["pol"])))
+        elif node["pol"] == 0.5:
+                inputs.append(np.array((node["x"], node["y"], -1)))
+        elif node["pol"] == -0.5:
+                inputs.append(np.array((node["x"], node["y"], -1)))
         else:
                 cells.append(np.array((node["x"], node["y"])))
 
-A = np.array((320, 300, node["pol"]))
-B = np.array((320, 280, node["pol"]))
+# A = np.array((320, 300, node["pol"]))
+# B = np.array((320, 280, node["pol"]))
  # take parsable circuit and gnerate hamiltonian 
 def calc_Ek_reduc(i, j):
     dist = ((i[0] - j[0])**2 + (i[1] - j[1])**2)**(1/2)
@@ -40,9 +44,9 @@ input_e = 0
 h_array = []
 for i in range(0, cells.shape[0]):
         for D in range(0, inputs.shape[0]):        
-                EkiD = Ek/calc_Ek_reduc(inputs[D],cells[i])
+                EkiD = Ek/calc_Ek_reduc(cells[i], inputs[D])
                 pD = inputs[D,2]
-                input_e += EkiD*pD
+                input_e = EkiD*pD
         h_array.append(input_e)
 h_array = np.array(h_array)
 
@@ -51,11 +55,11 @@ for j in range(0, cells.shape[0]):
         for i in range(0,cells.shape[0]):
                 if i < j:                
                         Ekij = Ek/calc_Ek_reduc(cells[j],cells[i])
-                        J_array[i][j] = Ekij
+                        J_array[j][i] = -Ekij
 J_array = np.array(J_array)
-print(J_array)
+# print(J_array)
 
-run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False, 
+run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=True, 
         num_reads=10, show_inspector=True, plot_emb_path=None, 
         h_array = h_array, J_array= J_array)
        
