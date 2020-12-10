@@ -1,6 +1,7 @@
 from qcadtrans import QCACircuit
 from qca_leap_minimal import run_qca_minimal
 import numpy as np
+import matplotlib.pyplot as plt
 
 qcafile = 'COP1'
 circuit = QCACircuit(fname=qcafile, verbose=True )
@@ -33,8 +34,8 @@ for i in range(len(circuit.nodes)):
 # B = np.array((320, 280, node["pol"]))
 # take parsable circuit and gnerate hamiltonian 
 
-print(np.array(inputs))
-print(np.array(drivers))
+# print(np.array(inputs))
+# print(np.array(drivers))
 # print(np.array(cells))
 # print(output_cell_index)
 # print(len(cells))
@@ -48,8 +49,8 @@ def calc_Ek_reduc(i, j):
         dist = (((i[0] - j[0])/20)**2 + ((i[1] - j[1])/20)**2)**(1/2)
         return dist**5
 
-for a in [-1, 1]:
-        for b in [-1, 1]:
+for a in [-1]:
+        for b in [-1]:
                 inputs[0][2] = a
                 inputs[1][2] = b
 
@@ -80,11 +81,16 @@ for a in [-1, 1]:
                 J_matrix = np.array(J_matrix)
                 # print(J_matrix)
 
-                response = run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False, 
+                response = run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=True, 
                                         num_reads=50, show_inspector=False, plot_emb_path=None, 
                                         h_array = h_array, J_array= J_matrix)
+                print(response.dtype)
+                energy_levels = response['energy']
+                bins = np.unique(energy_levels)
+                ground_energy = np.amin(energy_levels)
+                plt.hist(energy_levels, bins)
+                plt.show()
 
-                print(response)
                 # print('inputs:', a, b)
                 # print('output:', response)
                 # print('outputa:', response[output_cell_index[0]])
