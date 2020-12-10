@@ -84,6 +84,7 @@ for a in [-1, 1]:
                                         num_reads=50, show_inspector=False, plot_emb_path=None, 
                                         h_array = h_array, J_array= J_matrix)
 
+                print(response)
                 # print('inputs:', a, b)
                 # print('output:', response)
                 # print('outputa:', response[output_cell_index[0]])

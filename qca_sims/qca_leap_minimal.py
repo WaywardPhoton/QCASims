@@ -125,8 +125,8 @@ def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False,
     if show_inspector and not use_classical:
         print('\nOpening problem inspector on your browser.')
         dwave.inspector.show(response)
-    # return response.record
-    return use_result
+    return response.record
+    # return use_result
 
 if __name__ == '__main__':
     run_qca_minimal(show_inspector=True, plot_emb_path='embedding.pdf')
