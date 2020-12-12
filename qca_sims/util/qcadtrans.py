@@ -19,7 +19,7 @@ import numpy as np
 
 import re
 
-from graph import Graph
+from .graph import Graph
 
 
 def dget(d, key, default=None, mp=lambda x:x):
@@ -149,7 +149,7 @@ class ParserNode:
         '''
 
         head = None
-        try:
+        try:            
             with open(fname, 'r') as fp:
                 head = ParserNode(fp, 'root')
         except Exception as e:

@@ -8,7 +8,7 @@ https://docs.ocean.dwavesys.com/en/stable/getting_started.html
 
 def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False, 
         num_reads=10, show_inspector=False, plot_emb_path=None, 
-        h_array=[-1, 0], J_array=[[0, 1],[1, 0]]):
+        h_array=[-1, 0], J_matrix=[[0, 1],[1, 0]]):
     '''
     Minimal 1 Driver 2 Cell QCA Problem (introduced in the Leap slide deck).
 
@@ -49,7 +49,7 @@ def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False,
 
     # define self bias (h) and coupling strengths (J)
     h = - E_k * np.array(h_array)
-    J = - E_k * np.array(J_array)
+    J = - E_k * np.array(J_matrix)
     N = len(h)
 
     # create edgelist (note that {} initializes Python dicts)
@@ -88,7 +88,6 @@ def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False,
     dwave_sampler = DWaveSampler(solver=solver)
 
     # run the problem
-    use_result = []
     sampler = None
     response = None
     if use_classical:
@@ -125,7 +124,7 @@ def run_qca_minimal(E_k=1, qpu_arch='pegasus', use_classical=False,
     if show_inspector and not use_classical:
         print('\nOpening problem inspector on your browser.')
         dwave.inspector.show(response)
-    return response.record
+    return response
     # return use_result
 
 if __name__ == '__main__':
