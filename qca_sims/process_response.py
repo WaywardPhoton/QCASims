@@ -51,6 +51,9 @@ def process_response(response, output_cell_index, expected_out, num_reads):
     print(bins) 
     plt.bar(bins, aggr_count.values())
     plt.xticks(rotation=90)
+    plt.xlabel("Energy levels")
+    plt.ylabel("Number of occurences out of "+ str(num_reads))
+    plt. title("Number of occurences for each energy state")
     plt.show()
 
 
