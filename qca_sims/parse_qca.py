@@ -4,10 +4,6 @@ from util import QCACircuit
 
 def parse_qca(qcafile):
     circuit = QCACircuit(fname=qcafile, verbose=True )
-    print(type(circuit))
-
-    print(circuit.nodes)
-
     drivers = []
     inputs = []
     cells = []

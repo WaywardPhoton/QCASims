@@ -12,6 +12,7 @@ def process_response(response, output_cell_index, expected_out, num_reads):
     sample = response['sample']
     
     ground = np.min(energy_levels)
+    print('ground energy is ', ground)
     ground_indices = np.where(energy_levels == energy_levels.min())[0]
     # print(ground_indices)
     ground_count = 0
@@ -48,12 +49,12 @@ def process_response(response, output_cell_index, expected_out, num_reads):
     # print(count_keys)
     count_keys = np.sort(count_keys)
     bins = [str(round(key,3)) for key in count_keys]   
-    print(bins) 
+    # print(bins) 
     plt.bar(bins, aggr_count.values())
     plt.xticks(rotation=90)
     plt.show()
 
-
+    max_freq_energy_index = np.argmax(num_occurrences, axis=0)
     for j in range(len(output_cell_index)):
         countg = 0
         count = 0
@@ -65,9 +66,11 @@ def process_response(response, output_cell_index, expected_out, num_reads):
                 if energy_levels[i] == ground:
                     countg += num_occurrences[i]
 
-        perc_ground = countg/ground_count
+        perc_max = countg/ground_count
         perc = count/num_reads
-        print('percent of output', j, 'correct in ground state:', perc_ground)
+        
+
+        print('percent of output', j, 'correct in ground state:', perc_max)
         print('percent of output', j, 'correct overall:', perc)
 
 
